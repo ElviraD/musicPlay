@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>music</title>
+	<style type="text/css">
+		/*实现背景图片透明，内容不透明*/
+		#music {
+			width: 500px;
+			height: 500px;
+			border-radius: 10px;
+			margin: 20px auto;
+			position: relative;
+			background: url(./image/一月，银装轻舞-紫竹笛韵.jpg) no-repeat;
+			background-size: cover;
+			text-align: center;
+		}
+		#container {
+			position: absolute;
+			left: 0;
+		    right: 0;
+		    top: 0;
+		    bottom: 0;
+		    width: 500px;
+		    height: 500px;
+		    text-align: center;
+		    background:rgba(255,255,255,0.6);
+		}
+		/*实现背景图片透明，内容不透明*/
+
+		#musicImg {
+			width: 280px;
+			height: 280px;
+			border-radius: 50%;
+		}
+		audio {
+			display: block;
+			margin: 20px auto;
+		}
+		#musicName {
+			padding-top: 10px;
+			line-height: 30px;
+			color: #cc1b1b;
+		}
+		.btn>button {
+			width: 60px;
+			height: 30px;
+			border-radius: 10px;
+			background: skyblue;
+		}
+	</style>
+</head>
+<body>
+	<div id="music">
+		<div id="container">
+			<h3 id="musicName">一月，银装轻舞-紫竹笛韵</h3>
+			<img src="image/一月，银装轻舞-紫竹笛韵.jpg" id="musicImg">
+			<audio src="./music/一月，银装轻舞-紫竹笛韵.mp3" controls id="audio"></audio>
+			<div class="btn">
+				<button id="play">play</button>
+				<button id="pause">pause</button>
+				<button id="prev">prev</button>
+				<button id="next">next</button>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var play = document.getElementById('play'),
+			pause = document.getElementById('pause'),
+			prev = document.getElementById('prev'),
+			next = document.getElementById('next'),
+			musicName = document.getElementById('musicName'),
+			musicImg = document.getElementById('musicImg'),
+			bgImage = document.getElementById('music');
+
+		var music = new Array();
+		music = ['一月，银装轻舞-紫竹笛韵','二月，莺飞草长-紫竹笛韵','三月，桃沐春风-紫竹笛韵','四月，初雨微凉-紫竹笛韵','五月，和风微醺-紫竹笛韵','六月，晴雨流转-紫竹笛韵','七月，蝉鸣月色-紫竹笛韵','八月，盛夏未央-紫竹笛韵','九月，一叶知秋-紫竹笛韵','十月，霪雨缠绵-紫竹笛韵','十一月，深秋叙-紫竹笛韵','十二月，初雪诉-紫竹笛韵','神龙（Loong）-紫竹笛韵'];
+		var len = music.length;
+		var num = 0;
+
+		// 播放
+		play.onclick = function(){
+			if(audio.paused){
+				audio.play();
+			}
+		}
+
+		// 暂停
+		pause.onclick = function(){
+			if(audio.played){
+				audio.pause();
+			}
+		}
+
+		// 上一首
+		prev.onclick = function(){
+			num = (num + len - 1) % len;
+			audio.src = './music/' + music[num] + '.mp3';
+			musicName.innerHTML = music[num];
+			bgImage.style.backgroundImage = 'url(./image/' + music[num] + '.jpg)';
+			musicImg.src = './image/' + music[num] + '.jpg';
+			audio.play();
+		}
+
+		// 下一首
+		next.onclick = function(){
+			num = (num + 1) % len;
+			audio.src = './music/' + music[num] + '.mp3';
+			musicName.innerHTML = music[num];
+			bgImage.style.backgroundImage = 'url(./image/' + music[num] + '.jpg)';
+			musicImg.src = './image/' + music[num] + '.jpg';
+			audio.play();
+		}
+
+		// 自动切换下一首
+		audio.addEventListener('ended',function(){
+			next.onclick();
+		},false);
+	</script>
+</body>
+</html>
